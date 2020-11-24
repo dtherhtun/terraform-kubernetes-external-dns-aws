@@ -215,7 +215,20 @@ resource "kubernetes_deployment" "this" {
             "--txt-owner-id=my-identifier",
           ]
 
+					volume_mount { # hack for automountServiceAccountToken
+            name = kubernetes_service_account.external_dns.default_secret_name
+            mount_path = "/var/run/secrets/kubernetes.io/serviceaccount"
+            read_only = true
+          }
         }
+
+        volume { # hack for automountServiceAccountToken
+          name = kubernetes_service_account.external_dns.default_secret_name
+          secret {
+            secret_name = kubernetes_service_account.external_dns.default_secret_name
+          }
+        }
+        
 
         service_account_name             = kubernetes_service_account.this.metadata[0].name
         termination_grace_period_seconds = 60
