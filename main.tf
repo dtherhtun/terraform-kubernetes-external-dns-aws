@@ -9,6 +9,9 @@ resource "kubernetes_service_account" "this" {
   metadata {
     name      = "external-dns"
     namespace = var.k8s_namespace
+    annotations = {
+      "eks.amazonaws.com/role-arn" = "aws_iam_role.external_dns.arn"
+    }
     labels = {
       "app.kubernetes.io/name"       = "external-dns"
       "app.kubernetes.io/managed-by" = "terraform"

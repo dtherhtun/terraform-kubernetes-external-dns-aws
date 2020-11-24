@@ -33,3 +33,8 @@ variable "aws_iam_role_for_policy" {
   default     = null
 }
 
+variable "k8s_cluster_type" {
+  description = "K8s cluster Type"
+  type        = string
+  default     = "eks"
+}
