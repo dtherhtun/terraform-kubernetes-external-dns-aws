@@ -18,12 +18,18 @@ variable "k8s_pod_labels" {
 
 variable "domain" {
   description = "Additional labels to be added to the Pods."
-  type        = string
+  type        = list(string)
 }
 
 variable "external_dns_version" {
   description = "The AWS External DNS version to use. See https://github.com/kubernetes-sigs/external-dns/releases for available versions"
   type        = string
-  default     = "0.5.9"
+  default     = "0.7.4"
+}
+
+variable "aws_iam_role_for_policy" {
+  description = "AWS role name for attaching IAM policy"
+  type        = string
+  default     = null
 }
 
