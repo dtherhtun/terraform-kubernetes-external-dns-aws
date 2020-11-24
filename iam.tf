@@ -18,23 +18,13 @@ data "aws_iam_policy_document" "ec2_assume_role" {
   }
 }
 
-data "aws_iam_policy_document" "eks_oidc_assume_role" {
+data "aws_iam_policy_document" "eks_assume_role" {
   count = var.k8s_cluster_type == "eks" ? 1 : 0
   statement {
-    actions = ["sts:AssumeRoleWithWebIdentity"]
+    actions = ["sts:AssumeRole"]
     effect  = "Allow"
-    condition {
-      test     = "StringEquals"
-      variable = "${replace(data.aws_eks_cluster.selected[0].identity[0].oidc[0].issuer, "https://", "")}:sub"
-      values = [
-        "system:serviceaccount:${var.k8s_namespace}:external-dns"
-      ]
-    }
     principals {
-      identifiers = [
-        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${replace(data.aws_eks_cluster.selected[0].identity[0].oidc[0].issuer, "https://", "")}"
-      ]
-      type = "Federated"
+      identifiers = ["eks.amazonaws.com"]
     }
   }
 }
@@ -48,7 +38,7 @@ resource "aws_iam_role" "external_dns" {
 
   force_detach_policies = true
 
-  assume_role_policy = var.k8s_cluster_type == "vanilla" ? data.aws_iam_policy_document.ec2_assume_role[0].json : data.aws_iam_policy_document.eks_oidc_assume_role[0].json
+  assume_role_policy = var.k8s_cluster_type == "vanilla" ? data.aws_iam_policy_document.ec2_assume_role[0].json : data.aws_iam_policy_document.eks_assume_role[0].json
 }
 
 data "aws_iam_policy_document" "external_dns" {
