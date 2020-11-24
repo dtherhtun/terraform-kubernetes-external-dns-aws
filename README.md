@@ -29,7 +29,7 @@ module "external_dns" {
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | aws\_iam\_role\_for\_policy | AWS role name for attaching IAM policy | `string` | `null` | no |
-| domain | Additional labels to be added to the Pods. | `list(string)` | n/a | yes |
+| domains | Additional labels to be added to the Pods. | `list(string)` | n/a | yes |
 | external\_dns\_version | The AWS External DNS version to use. See https://github.com/kubernetes-sigs/external-dns/releases for available versions | `string` | `"0.7.4"` | no |
 | k8s\_cluster\_type | K8s cluster Type | `string` | `"eks"` | no |
 | k8s\_namespace | Kubernetes namespace to deploy the AWS External DNS into. | `string` | `"kube-system"` | no |

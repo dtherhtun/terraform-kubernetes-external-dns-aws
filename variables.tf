@@ -16,7 +16,7 @@ variable "k8s_pod_labels" {
   default     = {}
 }
 
-variable "domain" {
+variable "domains" {
   description = "Additional labels to be added to the Pods."
   type        = list(string)
 }

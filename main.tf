@@ -190,7 +190,7 @@ resource "kubernetes_deployment" "this" {
           args = [
             "--source=service",
             "--source=ingress",
-            "--domain-filter=${var.domain}",
+            "--domain-filter=${var.domains}",
             "--provider=aws",
             "--policy=upsert-only",
             "--aws-zone-type=public",
