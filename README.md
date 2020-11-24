@@ -30,6 +30,7 @@ module "external_dns" {
 |------|-------------|------|---------|:--------:|
 | domains | Additional labels to be added to the Pods. | `list(string)` | n/a | yes |
 | external\_dns\_version | The AWS External DNS version to use. See https://github.com/kubernetes-sigs/external-dns/releases for available versions | `string` | `"0.7.4"` | no |
+| k8s\_cluster\_name | Current Cluster Name | `string` | n/a | yes |
 | k8s\_cluster\_type | K8s cluster Type | `string` | `"eks"` | no |
 | k8s\_namespace | Kubernetes namespace to deploy the AWS External DNS into. | `string` | `"kube-system"` | no |
 | k8s\_pod\_labels | Additional labels to be added to the Pods. | `map(string)` | `{}` | no |

@@ -32,3 +32,8 @@ variable "k8s_cluster_type" {
   type        = string
   default     = "eks"
 }
+
+variable "k8s_cluster_name" {
+  description = "Current Cluster Name"
+  type        = string
+}
