@@ -1,25 +1,6 @@
 data "aws_caller_identity" "current" {}
 
-# The EKS cluster (if any) that represents the installation target.
-data "aws_eks_cluster" "selected" {
-  count = var.k8s_cluster_type == "eks" ? 1 : 0
-  name  = var.k8s_cluster_name
-}
-
-data "aws_iam_policy_document" "ec2_assume_role" {
-  count = var.k8s_cluster_type == "vanilla" ? 1 : 0
-  statement {
-    actions = ["sts:AssumeRole"]
-
-    principals {
-      type        = "Service"
-      identifiers = ["ec2.amazonaws.com"]
-    }
-  }
-}
-
 data "aws_iam_policy_document" "eks_assume_role" {
-  count = var.k8s_cluster_type == "eks" ? 1 : 0
   statement {
     actions = ["sts:AssumeRole"]
     effect  = "Allow"
@@ -31,15 +12,11 @@ data "aws_iam_policy_document" "eks_assume_role" {
 }
 
 resource "aws_iam_role" "external_dns" {
-  name        = "${var.k8s_cluster_type}-external-dns"
+  name        = "eks-external-dns"
   description = "Permissions required by the Kubernetes AWS EKS External Name controller to do it's job."
   path        = "/"
 
-  #  tags = var.aws_tags
-
-  force_detach_policies = true
-
-  assume_role_policy = var.k8s_cluster_type == "vanilla" ? data.aws_iam_policy_document.ec2_assume_role[0].json : data.aws_iam_policy_document.eks_assume_role[0].json
+  assume_role_policy = data.aws_iam_policy_document.eks_assume_role.json
 }
 
 data "aws_iam_policy_document" "external_dns" {
@@ -63,7 +40,6 @@ data "aws_iam_policy_document" "external_dns" {
 resource "aws_iam_policy" "external_dns" {
   name        = "external_dns"
   description = "Allows access to resources needed to run external dns."
-  path        = "/"
   policy      = data.aws_iam_policy_document.external_dns.json
 }
 
