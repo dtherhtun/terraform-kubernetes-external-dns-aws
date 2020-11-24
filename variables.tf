@@ -27,12 +27,6 @@ variable "external_dns_version" {
   default     = "0.7.4"
 }
 
-variable "aws_iam_role_for_policy" {
-  description = "AWS role name for attaching IAM policy"
-  type        = string
-  default     = null
-}
-
 variable "k8s_cluster_type" {
   description = "K8s cluster Type"
   type        = string
