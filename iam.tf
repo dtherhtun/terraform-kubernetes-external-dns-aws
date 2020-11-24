@@ -42,7 +42,7 @@ data "aws_iam_policy_document" "eks_oidc_assume_role" {
 resource "aws_iam_role" "external_dns" {
   name        = "${var.k8s_cluster_type}-external-dns"
   description = "Permissions required by the Kubernetes AWS EKS External Name controller to do it's job."
-  path        = local.aws_iam_path_prefix
+  path        = "/"
 
   #  tags = var.aws_tags
 
