@@ -8,4 +8,4 @@ terraform.tfvars.example
 terraform.tfstate
 terraform.tfstate*
 kubeconfig-*
-
+ignore.tf

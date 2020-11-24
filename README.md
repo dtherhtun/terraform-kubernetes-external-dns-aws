@@ -35,6 +35,7 @@ module "external_dns" {
 | k8s\_namespace | Kubernetes namespace to deploy the AWS External DNS into. | `string` | `"kube-system"` | no |
 | k8s\_pod\_labels | Additional labels to be added to the Pods. | `map(string)` | `{}` | no |
 | k8s\_replicas | Amount of replicas to be created. | `number` | `1` | no |
+| region | n/a | `string` | `"ap-southeast-1"` | no |
 
 ## Outputs
 

@@ -25,6 +25,7 @@ data "aws_iam_policy_document" "eks_assume_role" {
     effect  = "Allow"
     principals {
       identifiers = ["eks.amazonaws.com"]
+      type        = "Service"
     }
   }
 }
