@@ -36,6 +36,7 @@ resource "kubernetes_cluster_role" "this" {
 
     resources = [
       "services",
+      "endpoints",
     ]
 
     verbs = [
@@ -86,6 +87,7 @@ resource "kubernetes_cluster_role" "this" {
 
     verbs = [
       "list",
+      "watch",
     ]
   }
 }
