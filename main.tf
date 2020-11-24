@@ -214,21 +214,10 @@ resource "kubernetes_deployment" "this" {
             "--registry=txt",
             "--txt-owner-id=my-identifier",
           ]
-
-					volume_mount { #  automountServiceAccountToken
-            name = kubernetes_service_account.this.default_secret_name
-            mount_path = "/var/run/secrets/kubernetes.io/serviceaccount"
-            read_only = true
-          }
         }
-
-        volume { # automountServiceAccountToken
-          name = kubernetes_service_account.this.default_secret_name
-          secret {
-            secret_name = kubernetes_service_account.this.default_secret_name
-          }
+        security_context {
+          fs_group = 65534
         }
-        
 
         service_account_name             = kubernetes_service_account.this.metadata[0].name
         termination_grace_period_seconds = 60
